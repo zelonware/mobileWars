@@ -1,8 +1,12 @@
 // ignore: implementation_imports
 import 'package:flutter/material.dart';
 
+import '../models/task.dart';
+
 class TaskItem extends StatelessWidget {
-  const TaskItem({super.key});
+  final Task task;
+
+  const TaskItem({super.key, required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +21,16 @@ class TaskItem extends StatelessWidget {
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           tileColor: Colors.white24,
-          leading: const Icon(
-            Icons.check_box,
+          leading: Icon(
+            task.isDone ? Icons.check_box : Icons.check_box_outline_blank,
             color: Colors.blue,
           ),
-          title: const Text(
-            'This is a task',
+          title: Text(
+            task.title!,
             style: TextStyle(
-              fontSize: 16,
-              color: Colors.black,
-              // decoration: TextDecoration.lineThrough
-            ),
+                fontSize: 16,
+                color: Colors.black,
+                decoration: task.isDone ? TextDecoration.lineThrough : null),
           ),
           trailing: Container(
               padding: const EdgeInsets.all(0),

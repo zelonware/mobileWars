@@ -1,5 +1,7 @@
-import 'package:f_todoapp/widgets/task.dart';
 import 'package:flutter/material.dart';
+
+import 'widgets/taskitem.dart';
+import 'models/task.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,38 +12,37 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false, title: 'TodoApp', home: Home());
   }
 }
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  Home({super.key});
 
-  // This widget is the root of your application.
+  final tasks = Task.taskList();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: buildAppBar(),
-        body: Column(
-          children: [
-            // const Text('Here goes the search bar'),
-            Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 5),
-              child: const Text(
-                'Tasks',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-              ),
+        body: Column(children: [
+          // const Text('Here goes the search bar'),
+          Container(
+            margin: const EdgeInsets.only(top: 10, bottom: 5),
+            child: const Text(
+              'Tasks',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
             ),
-            Expanded(
-                child: ListView(children: [
-              TaskItem(),
-              TaskItem(),
-              TaskItem(),
-              TaskItem(),
-            ]))
-          ],
-        ));
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  return TaskItem(task: tasks[index]);
+                }),
+          )
+        ]));
   }
 
   AppBar buildAppBar() {
