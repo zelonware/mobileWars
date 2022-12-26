@@ -25,24 +25,71 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(),
-        body: Column(children: [
-          // const Text('Here goes the search bar'),
-          Container(
-            margin: const EdgeInsets.only(top: 10, bottom: 5),
-            child: const Text(
-              'Tasks',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  return TaskItem(task: tasks[index]);
-                }),
-          )
-        ]));
+      appBar: buildAppBar(),
+      body: buildAppBody(),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Colors.red,
+      //   onPressed: () {
+      //     print("On pressed action button");
+      //   },
+      //   child: const Icon(Icons.add),
+      // ),
+    );
+  }
+
+  Column buildAppBody() {
+    return Column(children: [
+      // const Text('Here goes the search bar'),
+      Container(
+        margin: const EdgeInsets.only(top: 10, bottom: 5),
+        child: const Text(
+          'Tasks',
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+        ),
+      ),
+      Expanded(
+        child: ListView.builder(
+            itemCount: tasks.length,
+            itemBuilder: (context, index) {
+              return TaskItem(task: tasks[index]);
+            }),
+      ),
+      Align(
+        alignment: Alignment.bottomCenter,
+        child: Row(
+          children: [
+            Expanded(
+                child: Container(
+              margin: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  // boxShadow: BoxShadow(
+                  //     color: Colors.grey,
+                  //     offset: Offset(0.0, 0.0),
+                  //     blurRadius: 10.0,
+                  //     spreadRadius: 0.0)
+                  borderRadius: BorderRadius.circular(10)),
+              child: const TextField(
+                decoration: InputDecoration(
+                    hintText: 'Add a new task', border: InputBorder.none),
+              ),
+            )),
+            Container(
+              margin: const EdgeInsets.only(bottom: 20, right: 20),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightBlue,
+                      minimumSize: const Size(60, 60),
+                      elevation: 10),
+                  onPressed: () {},
+                  child: const Icon(Icons.add)),
+            )
+          ],
+        ),
+      )
+    ]);
   }
 
   AppBar buildAppBar() {
