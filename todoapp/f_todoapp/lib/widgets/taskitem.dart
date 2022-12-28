@@ -1,12 +1,17 @@
-// ignore: implementation_imports
 import 'package:flutter/material.dart';
 
 import '../models/task.dart';
 
 class TaskItem extends StatelessWidget {
   final Task task;
+  final onTaskStatusChanged;
+  // final onTaskDeleted;
 
-  const TaskItem({super.key, required this.task});
+  const TaskItem(
+      {super.key,
+      required this.task,
+      // required this.onTaskDeleted,
+      required this.onTaskStatusChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,8 @@ class TaskItem extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 10),
         child: ListTile(
           onTap: () {
-            print("Check task");
+            // print("Check task");
+            onTaskStatusChanged(task);
           },
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

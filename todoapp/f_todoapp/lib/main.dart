@@ -17,30 +17,23 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final tasks = Task.taskList();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(),
-      body: buildAppBody(),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: Colors.red,
-      //   onPressed: () {
-      //     print("On pressed action button");
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
-    );
+    return Scaffold(appBar: buildAppBar(), body: buildAppBody());
   }
 
   Column buildAppBody() {
     return Column(children: [
-      // const Text('Here goes the search bar'),
       Container(
         margin: const EdgeInsets.only(top: 10, bottom: 5),
         child: const Text(
@@ -52,7 +45,10 @@ class Home extends StatelessWidget {
         child: ListView.builder(
             itemCount: tasks.length,
             itemBuilder: (context, index) {
-              return TaskItem(task: tasks[index]);
+              return TaskItem(
+                task: tasks[index],
+                onTaskStatusChanged: handleTaskStatusChange,
+              );
             }),
       ),
       Align(
@@ -64,13 +60,7 @@ class Home extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  // boxShadow: BoxShadow(
-                  //     color: Colors.grey,
-                  //     offset: Offset(0.0, 0.0),
-                  //     blurRadius: 10.0,
-                  //     spreadRadius: 0.0)
-                  borderRadius: BorderRadius.circular(10)),
+                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
               child: const TextField(
                 decoration: InputDecoration(
                     hintText: 'Add a new task', border: InputBorder.none),
@@ -90,6 +80,12 @@ class Home extends StatelessWidget {
         ),
       )
     ]);
+  }
+
+  void handleTaskStatusChange(Task task) {
+    setState(() {
+      task.isDone = !task.isDone;
+    });
   }
 
   AppBar buildAppBar() {
