@@ -5,12 +5,12 @@ import '../models/task.dart';
 class TaskItem extends StatelessWidget {
   final Task task;
   final onTaskStatusChanged;
-  // final onTaskDeleted;
+  final onTaskDeleted;
 
   const TaskItem(
       {super.key,
       required this.task,
-      // required this.onTaskDeleted,
+      required this.onTaskDeleted,
       required this.onTaskStatusChanged});
 
   @override
@@ -52,7 +52,8 @@ class TaskItem extends StatelessWidget {
                 iconSize: 18,
                 icon: const Icon(Icons.delete),
                 onPressed: () {
-                  print('Clicked on delete icon');
+                  // print('Clicked on delete icon');
+                  onTaskDeleted(task.id);
                 },
               )),
         ));

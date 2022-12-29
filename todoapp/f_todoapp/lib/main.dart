@@ -47,6 +47,7 @@ class _HomeState extends State<Home> {
             itemBuilder: (context, index) {
               return TaskItem(
                 task: tasks[index],
+                onTaskDeleted: handleRemoveTask,
                 onTaskStatusChanged: handleTaskStatusChange,
               );
             }),
@@ -85,6 +86,12 @@ class _HomeState extends State<Home> {
   void handleTaskStatusChange(Task task) {
     setState(() {
       task.isDone = !task.isDone;
+    });
+  }
+
+  void handleRemoveTask(String taskId) {
+    setState(() {
+      tasks.removeWhere((x) => x.id == taskId);
     });
   }
 
