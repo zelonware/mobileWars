@@ -26,6 +26,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final tasks = Task.taskList();
+  final taskDescriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +63,9 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: const TextField(
-                decoration: InputDecoration(
+              child: TextField(
+                controller: taskDescriptionController,
+                decoration: const InputDecoration(
                     hintText: 'Add a new task', border: InputBorder.none),
               ),
             )),
@@ -74,7 +76,9 @@ class _HomeState extends State<Home> {
                       backgroundColor: Colors.lightBlue,
                       minimumSize: const Size(60, 60),
                       elevation: 10),
-                  onPressed: () {},
+                  onPressed: () {
+                    addNewTask(taskDescriptionController.text);
+                  },
                   child: const Icon(Icons.add)),
             )
           ],
@@ -93,6 +97,16 @@ class _HomeState extends State<Home> {
     setState(() {
       tasks.removeWhere((x) => x.id == taskId);
     });
+  }
+
+  void addNewTask(String taskDescription) {
+    setState(() {
+      if (taskDescription.isNotEmpty) {
+        tasks.add(
+            Task(id: DateTime.now().toIso8601String(), title: taskDescription));
+      }
+    });
+    taskDescriptionController.clear();
   }
 
   AppBar buildAppBar() {
