@@ -9,7 +9,20 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="data:Task">
                     <Grid>
-                        <Label Text="{Binding Description}" FontAttributes="Bold" />
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Grid.Column="0"
+                                  IsChecked="{Binding IsDone}"/>
+                        <Label Grid.Column="1"
+                               VerticalTextAlignment="Center"
+                               Text="{Binding Description}"
+                               FontAttributes="Bold" />
+                        <Button Grid.Column="2"
+                                Clicked="DeleteTaskBtn_Clicked"
+                                Text="Delete"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
