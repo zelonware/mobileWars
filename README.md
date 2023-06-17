@@ -4,6 +4,20 @@ this is...
 
 testing and fooling aroud with mobile frameworks
 
+## Flutter
+
+### Proyectos
+
+Repos:
+
+- [Card](https://github.com/Beelzenef/flutterCard)
+- [Dicee](https://github.com/Beelzenef/flutterDicee)
+- [Xylophone](https://github.com/Beelzenef/flutterXylophone)
+- [Quizzler](https://github.com/Beelzenef/flutterQuizzler)
+- [Pizza calculator](https://github.com/Beelzenef/flutterPizzaCalc)
+
+### Code snippets
+
 CircleAvatar:
 
 ```dart
@@ -97,8 +111,24 @@ class PizzaCalculator extends StatelessWidget {
 
 ```
 
-```dart
+alertDialog:
 
+```dart
+Future<String> buildShowDialog(BuildContext context) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('No flavour selected'),
+        content: const Text('Please select a pizza flavour'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
 ```
 
 ```dart
@@ -109,9 +139,7 @@ class PizzaCalculator extends StatelessWidget {
 
 ```
 
-## Useful links
-
-### Flutter
+### Useful links
 
 - [Scaffold (widget)](https://api.flutter.dev/flutter/material/Scaffold-class.html)
 - [AppBar (widget)](https://api.flutter.dev/flutter/material/AppBar-class.html)
@@ -121,4 +149,5 @@ class PizzaCalculator extends StatelessWidget {
 - [An open list of apps built with Flutter](https://itsallwidgets.com/)
 - [Flutter Layout Cheat Sheet](https://medium.com/flutter-community/flutter-layout-cheat-sheet-5363348d037e)
 - [The official package repository for Dart and Flutter apps](https://pub.dev/)
-- []()
+- [Persist data with SQLite](https://docs.flutter.dev/cookbook/persistence/sqlite)
+- [Getting Started With the BLoC Pattern](https://www.kodeco.com/31973428-getting-started-with-the-bloc-pattern)
