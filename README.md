@@ -151,3 +151,7 @@ Future<String> buildShowDialog(BuildContext context) {
 - [The official package repository for Dart and Flutter apps](https://pub.dev/)
 - [Persist data with SQLite](https://docs.flutter.dev/cookbook/persistence/sqlite)
 - [Getting Started With the BLoC Pattern](https://www.kodeco.com/31973428-getting-started-with-the-bloc-pattern)
+- []()
+- []()
+- []()
+- []()
