@@ -7,9 +7,29 @@ class Movies {
     if (jsonList.isEmpty) return;
 
     for (var item in jsonList) {
-      final pelicula = Movie.fromJsonMap(item);
+      final pelicula = Movies.fromJsonMap(item);
       items.add(pelicula);
     }
+  }
+
+  static fromJsonMap(Map<String, dynamic> json) {
+    final movie = Movie(
+      voteCount: json['vote_count'],
+      id: json['id'],
+      video: json['video'],
+      voteAverage: json['vote_average'] / 1,
+      title: json['title'],
+      popularity: json['popularity'] / 1,
+      posterPath: json['poster_path'],
+      originalLanguage: json['original_language'],
+      originalTitle: json['original_title'],
+      genreIds: json['genre_ids'].cast<int>(),
+      backdropPath: json['backdrop_path'],
+      adult: json['adult'],
+      overview: json['overview'],
+      releaseDate: json['release_date'],
+    );
+    return movie;
   }
 }
 
@@ -46,23 +66,7 @@ class Movie {
     required this.releaseDate,
   });
 
-  static fromJsonMap(Map<String, dynamic> json) {
-    final movie = Movie(
-      voteCount: json['vote_count'],
-      id: json['id'],
-      video: json['video'],
-      voteAverage: json['vote_average'] / 1,
-      title: json['title'],
-      popularity: json['popularity'] / 1,
-      posterPath: json['poster_path'],
-      originalLanguage: json['original_language'],
-      originalTitle: json['original_title'],
-      genreIds: json['genre_ids'].cast<int>(),
-      backdropPath: json['backdrop_path'],
-      adult: json['adult'],
-      overview: json['overview'],
-      releaseDate: json['release_date'],
-    );
-    return movie;
+  getPosterPath() {
+    return 'https://image.tmdb.org/t/p/w500/$posterPath';
   }
 }

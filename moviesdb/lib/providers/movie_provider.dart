@@ -16,8 +16,7 @@ class MovieProvider {
     final resp = await http.get(uri, headers: headers);
     final data = json.decode(resp.body);
 
-    print(data);
-
-    return [];
+    final moviesExtracted = Movies.fromJsonList(data['results']);
+    return moviesExtracted.items;
   }
 }
