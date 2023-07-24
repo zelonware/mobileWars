@@ -8,8 +8,21 @@ class MovieProvider {
   String url = 'api.themoviedb.org';
   String lang = 'es-ES';
 
+  String baseUrl = 'api.themoviedb.org';
+
   Future<List<Movie>> getNowPlaying() async {
-    final uri = Uri.https('api.themoviedb.org', '/3/movie/now_playing');
+    final uri = Uri.https(baseUrl, '/3/movie/now_playing');
+
+    return processMovies(uri);
+  }
+
+  Future<List<Movie>> getPopular() async {
+    final uri = Uri.https(baseUrl, '/3/movie/popular');
+
+    return processMovies(uri);
+  }
+
+  Future<List<Movie>> processMovies(Uri uri) async {
     final headers = {
       'Authorization': 'Bearer $apiKey',
     };
