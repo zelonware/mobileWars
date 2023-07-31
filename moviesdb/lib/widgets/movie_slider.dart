@@ -4,50 +4,60 @@ import '../models/movie.dart';
 
 class MovieSlider extends StatelessWidget {
   final List<Movie> movies;
+  final Function nextPage;
 
-  const MovieSlider({super.key, required this.movies});
+  final pController = PageController(initialPage: 1, viewportFraction: 0.3);
+
+  MovieSlider({super.key, required this.movies, required this.nextPage});
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+
+    pController.addListener(() {
+      if (pController.position.pixels >=
+          pController.position.maxScrollExtent - 500) {
+        nextPage();
+      }
+    });
+
     return Container(
       margin: const EdgeInsets.only(left: 1),
       child: SizedBox(
         height: screenSize.height * 0.22,
-        child: PageView(
+        child: PageView.builder(
           pageSnapping: false,
           padEnds: false,
-          controller: PageController(initialPage: 1, viewportFraction: 0.3),
-          children: cards(context),
+          controller: pController,
+          itemCount: movies.length,
+          itemBuilder: (context, index) => movieCard(context, movies[index]),
         ),
       ),
     );
   }
 
-  List<Widget> cards(BuildContext c) {
-    return movies.map((e) {
-      return Container(
-        margin: const EdgeInsets.only(right: 15),
-        child: Column(children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              placeholder: const AssetImage('imgs/nia.jpg'),
-              image: NetworkImage(e.getPosterPath()),
-              fit: BoxFit.cover,
-              height: 160,
-            ),
+  Widget movieCard(BuildContext c, Movie movie) {
+    return Container(
+      margin: const EdgeInsets.only(right: 15),
+      child: Column(children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: FadeInImage(
+            placeholder: const AssetImage('imgs/nia.jpg'),
+            image: NetworkImage(movie.getPosterPath()),
+            fit: BoxFit.cover,
+            height: 160,
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          Text(
-            e.title,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(c).textTheme.bodySmall,
-          )
-        ]),
-      );
-    }).toList();
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          movie.title,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(c).textTheme.bodySmall,
+        )
+      ]),
+    );
   }
 }

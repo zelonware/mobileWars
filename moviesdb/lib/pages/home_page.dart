@@ -49,17 +49,19 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          FutureBuilder(
+          StreamBuilder(
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return MovieSlider(movies: snapshot.data ?? []);
+                return MovieSlider(
+                    movies: snapshot.data ?? [],
+                    nextPage: movieProvider.getPopular);
               } else {
                 return Container(
                     padding: const EdgeInsets.all(20),
                     child: const Center(child: CircularProgressIndicator()));
               }
             },
-            future: movieProvider.getPopular(),
+            stream: movieProvider.popularMoviesStream,
           )
         ],
       ),

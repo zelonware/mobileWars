@@ -10,17 +10,22 @@ class MovieProvider {
   String url = 'api.themoviedb.org';
   String lang = 'es-ES';
 
-  int popularPage = 1;
+  int popularPage = 0;
+  bool loadingMovies = false;
 
   String baseUrl = 'api.themoviedb.org';
 
-  List<Movie> popularMovies = List.empty();
+  List<Movie> popularMovies = List.empty(growable: true);
 
   StreamController<List<Movie>> popularMoviesController =
       StreamController<List<Movie>>();
 
   Function(List<Movie>) get popularSink => popularMoviesController.sink.add;
   Stream<List<Movie>> get popularMoviesStream => popularMoviesController.stream;
+
+  MovieProvider() {
+    getPopular();
+  }
 
   dispose() {
     popularMoviesController.close();
@@ -32,25 +37,34 @@ class MovieProvider {
     return processMovies(uri);
   }
 
-  Future<List<Movie>> getPopular() async {
+  getPopular() async {
+    if (loadingMovies) return;
+
+    loadingMovies = true;
+
     popularPage++;
 
-    final uri = Uri.https(baseUrl, '/3/movie/popular?page=$popularPage');
+    final Map<String, String> params = <String, String>{
+      'page': popularPage.toString(),
+    };
+    final uri = Uri.https(baseUrl, '/3/movie/popular', params);
 
-    return processMovies(uri);
+    final movies = await processMovies(uri);
+
+    popularMovies.addAll(movies);
+    popularSink(popularMovies);
+    loadingMovies = false;
   }
 
   Future<List<Movie>> processMovies(Uri uri) async {
     final headers = {
       'Authorization': 'Bearer $apiKey',
     };
+
     final resp = await http.get(uri, headers: headers);
     final data = json.decode(resp.body);
 
     final moviesExtracted = Movies.fromJsonList(data['results']);
-    popularMovies.addAll(moviesExtracted.items);
-    popularSink(popularMovies);
-
     return moviesExtracted.items;
   }
 }
