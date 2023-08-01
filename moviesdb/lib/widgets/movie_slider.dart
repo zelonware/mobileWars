@@ -24,7 +24,7 @@ class MovieSlider extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(left: 1),
       child: SizedBox(
-        height: screenSize.height * 0.22,
+        height: screenSize.height * 0.28,
         child: PageView.builder(
           pageSnapping: false,
           padEnds: false,
@@ -38,7 +38,7 @@ class MovieSlider extends StatelessWidget {
 
   Widget movieCard(BuildContext c, Movie movie) {
     return Container(
-      margin: const EdgeInsets.only(right: 15),
+      margin: const EdgeInsets.only(right: 4),
       child: Column(children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(20),
@@ -46,7 +46,7 @@ class MovieSlider extends StatelessWidget {
             placeholder: const AssetImage('imgs/nia.jpg'),
             image: NetworkImage(movie.getPosterPath()),
             fit: BoxFit.cover,
-            height: 160,
+            height: 180,
           ),
         ),
         const SizedBox(
