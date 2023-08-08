@@ -24,7 +24,7 @@ class Movies {
       originalLanguage: json['original_language'],
       originalTitle: json['original_title'],
       genreIds: json['genre_ids'].cast<int>(),
-      //backdropPath: json['backdrop_path'],
+      backdropPath: json['backdrop_path'] ?? 'imgs/loading.gif',
       adult: json['adult'],
       overview: json['overview'],
       releaseDate: json['release_date'],
@@ -44,7 +44,7 @@ class Movie {
   String originalLanguage;
   String originalTitle;
   List<int> genreIds;
-  // String backdropPath;
+  String backdropPath;
   bool adult;
   String overview;
   String releaseDate;
@@ -60,7 +60,7 @@ class Movie {
     required this.originalLanguage,
     required this.originalTitle,
     required this.genreIds,
-    // required this.backdropPath,
+    required this.backdropPath,
     required this.adult,
     required this.overview,
     required this.releaseDate,
@@ -68,5 +68,9 @@ class Movie {
 
   getPosterPath() {
     return 'https://image.tmdb.org/t/p/w500/$posterPath';
+  }
+
+  getBackdropPath() {
+    return 'https://image.tmdb.org/t/p/w500/$backdropPath';
   }
 }

@@ -30,14 +30,14 @@ class MovieSlider extends StatelessWidget {
           padEnds: false,
           controller: pController,
           itemCount: movies.length,
-          itemBuilder: (context, index) => movieCard(context, movies[index]),
+          itemBuilder: (context, index) => _movieCard(context, movies[index]),
         ),
       ),
     );
   }
 
-  Widget movieCard(BuildContext c, Movie movie) {
-    return Container(
+  Widget _movieCard(BuildContext c, Movie movie) {
+    final movieCard = Container(
       margin: const EdgeInsets.only(right: 4),
       child: Column(children: [
         ClipRRect(
@@ -58,6 +58,13 @@ class MovieSlider extends StatelessWidget {
           style: Theme.of(c).textTheme.bodySmall,
         )
       ]),
+    );
+
+    return GestureDetector(
+      child: movieCard,
+      onTap: () {
+        Navigator.pushNamed(c, 'detail', arguments: movie);
+      },
     );
   }
 }
