@@ -20,7 +20,7 @@ class Movies {
       voteAverage: json['vote_average'] / 1,
       title: json['title'],
       popularity: json['popularity'] / 1,
-      posterPath: json['poster_path'],
+      posterPath: json['poster_path'] ?? 'imgs/nia.jpg',
       originalLanguage: json['original_language'],
       originalTitle: json['original_title'],
       genreIds: json['genre_ids'].cast<int>(),

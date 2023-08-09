@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:moviesdb/providers/movie_provider.dart';
 import 'package:moviesdb/widgets/movie_slider.dart';
-
-import '../widgets/card_swiper.dart';
+import 'package:moviesdb/search/search_delegate.dart';
+import 'package:moviesdb/widgets/card_swiper.dart';
 
 class HomePage extends StatelessWidget {
   final movieProvider = MovieProvider();
@@ -12,9 +13,17 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: false, actions: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.search))
-      ]),
+      appBar: AppBar(
+        centerTitle: false,
+        actions: [
+          IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: DataSearch());
+              },
+              icon: const Icon(Icons.search))
+        ],
+        title: const Text('MoviesDB'),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [getCardSwiper(), getFooter()],

@@ -34,7 +34,7 @@ class MovieProvider {
   Future<List<Movie>> getNowPlaying() async {
     final uri = Uri.https(baseUrl, '/3/movie/now_playing');
 
-    return processMovies(uri);
+    return _processMovies(uri);
   }
 
   getPopular() async {
@@ -49,14 +49,23 @@ class MovieProvider {
     };
     final uri = Uri.https(baseUrl, '/3/movie/popular', params);
 
-    final movies = await processMovies(uri);
+    final movies = await _processMovies(uri);
 
     popularMovies.addAll(movies);
     popularSink(popularMovies);
     loadingMovies = false;
   }
 
-  Future<List<Movie>> processMovies(Uri uri) async {
+  Future<List<Movie>> searchMovies(String query) async {
+    final Map<String, String> params = <String, String>{
+      'query': query,
+    };
+    final uri = Uri.https(baseUrl, '/3/search/movie', params);
+
+    return _processMovies(uri);
+  }
+
+  Future<List<Movie>> _processMovies(Uri uri) async {
     final headers = {
       'Authorization': 'Bearer $apiKey',
     };
