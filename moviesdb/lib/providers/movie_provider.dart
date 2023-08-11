@@ -17,18 +17,19 @@ class MovieProvider {
 
   List<Movie> popularMovies = List.empty(growable: true);
 
-  StreamController<List<Movie>> popularMoviesController =
+  final StreamController<List<Movie>> _popularMoviesController =
       StreamController<List<Movie>>();
 
-  Function(List<Movie>) get popularSink => popularMoviesController.sink.add;
-  Stream<List<Movie>> get popularMoviesStream => popularMoviesController.stream;
+  Function(List<Movie>) get popularSink => _popularMoviesController.sink.add;
+  Stream<List<Movie>> get popularMoviesStream =>
+      _popularMoviesController.stream;
 
   MovieProvider() {
     getPopular();
   }
 
   dispose() {
-    popularMoviesController.close();
+    _popularMoviesController.close();
   }
 
   Future<List<Movie>> getNowPlaying() async {
