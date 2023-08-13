@@ -1,3 +1,5 @@
+import 'package:blocform/bloc/login_bloc.dart';
+import 'package:blocform/bloc/provider.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -13,6 +15,7 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget loginForm(BuildContext context) {
+    final bloc = Provider.loginBloc(context);
     final size = MediaQuery.of(context).size;
 
     return SingleChildScrollView(
@@ -39,11 +42,11 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(
                   height: 40,
                 ),
-                _emailField(),
+                _emailField(bloc),
                 const SizedBox(
                   height: 30,
                 ),
-                _passwordField(),
+                _passwordField(bloc),
                 const SizedBox(
                   height: 30,
                 ),
@@ -60,33 +63,43 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _emailField() {
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: const TextField(
-          decoration: InputDecoration(
-              icon: Icon(
-                Icons.alternate_email,
-                color: Colors.purple,
-              ),
-              hintText: 'example@mail.com',
-              labelText: 'Your email'),
-        ));
+  Widget _emailField(LoginBloc bloc) {
+    return StreamBuilder(
+        stream: bloc.emailStream,
+        builder: (context, snapshot) {
+          return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextField(
+                decoration: const InputDecoration(
+                    icon: Icon(
+                      Icons.alternate_email,
+                      color: Colors.purple,
+                    ),
+                    hintText: 'example@mail.com',
+                    labelText: 'Your email'),
+                onChanged: bloc.changeEmail,
+              ));
+        });
   }
 
-  Widget _passwordField() {
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: const TextField(
-          obscureText: true,
-          decoration: InputDecoration(
-              icon: Icon(
-                Icons.lock,
-                color: Colors.purple,
-              ),
-              hintText: 'your.safe.password',
-              labelText: 'Your password'),
-        ));
+  Widget _passwordField(LoginBloc bloc) {
+    return StreamBuilder(
+        stream: bloc.passwordStream,
+        builder: (context, snapshot) {
+          return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextField(
+                onChanged: bloc.changeEmail,
+                obscureText: true,
+                decoration: const InputDecoration(
+                    icon: Icon(
+                      Icons.lock,
+                      color: Colors.purple,
+                    ),
+                    hintText: 'your.safe.password',
+                    labelText: 'Your password'),
+              ));
+        });
   }
 
   Widget _loginButton() {

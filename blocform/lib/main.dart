@@ -1,3 +1,6 @@
+import 'package:blocform/bloc/provider.dart';
+import 'package:blocform/pages/home.dart';
+import 'package:blocform/pages/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,13 +12,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'BLoC form',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return Provider(
+      key: super.key,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const LoginPage(),
+          'home': (context) => const HomePage(),
+        },
+        title: 'BLoC form',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
       ),
-      home: const MyHomePage(title: 'BLoC form'),
     );
   }
 }
