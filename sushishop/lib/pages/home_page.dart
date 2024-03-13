@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
             // icon
             Padding(
               padding: const EdgeInsets.all(50.0),
-              child: Image.asset('img/maki.png'),
+              child: Image.asset('lib/img/maki.png'),
             ),
             const SizedBox(
               height: 10,
