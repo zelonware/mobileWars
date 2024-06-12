@@ -46,17 +46,17 @@ class MovieSlider extends StatelessWidget {
             placeholder: const AssetImage('imgs/nia.jpg'),
             image: NetworkImage(movie.getPosterPath()),
             fit: BoxFit.cover,
-            height: 180,
+            height: 170,
           ),
         ),
         const SizedBox(
           height: 5,
         ),
-        Text(
-          movie.title,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(c).textTheme.bodySmall,
-        )
+        // Text(
+        //   movie.title,
+        //   overflow: TextOverflow.ellipsis,
+        //   style: Theme.of(c).textTheme.bodySmall,
+        // )
       ]),
     );
 
